@@ -63,7 +63,7 @@ if streamlit.button('get fruit loads list'):
 def insert_row_snowflake(new_fruit):
     try:
         # Create a new connection for adding a fruit to the list
-        my_cnx = snowflake.connector.connect(**snowflake_secrets)
+        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
         with my_cnx.cursor() as my_cur:
             my_cur.execute("INSERT INTO fruit_load_list VALUES (?)", (new_fruit,))
             my_cnx.commit()
