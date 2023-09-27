@@ -60,14 +60,31 @@ if streamlit.button('get fruit loads list'):
   my_data_rows=get_fruit_load_list()
   streamlit.dataframe(my_data_rows)
     
+# def insert_row_snowflake(new_fruit):
+#     try:
+#         # Create a new connection for adding a fruit to the list
+#         my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+#         with my_cnx.cursor() as my_cur:
+#             query = "INSERT INTO fruit_load_list (fruit_name) VALUES (:new_fruit)"
+#             my_cur.execute(query, {'new_fruit': new_fruit})
+#             my_cnx.commit()
+#         return "Thanks for adding " + new_fruit
+#     except Exception as e:
+#         return "Error adding the fruit: " + str(e)
+
+# add_my_fruit = streamlit.text_input('What fruit would you like to add?')
+# if streamlit.button('Add a fruit to the list'):
+#     back_from_function = insert_row_snowflake(add_my_fruit)
+#     streamlit.text(back_from_function)
+
 def insert_row_snowflake(new_fruit):
     try:
         # Create a new connection for adding a fruit to the list
-        my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-        with my_cnx.cursor() as my_cur:
-            query = "INSERT INTO fruit_load_list (fruit_name) VALUES (:new_fruit)"
-            my_cur.execute(query, {'new_fruit': new_fruit})
-            my_cnx.commit()
+        new_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+        with new_cnx.cursor() as my_cur:
+            query = "INSERT INTO fruit_load_list (fruit_name) VALUES (?)"
+            my_cur.execute(query, (new_fruit,))
+            new_cnx.commit()
         return "Thanks for adding " + new_fruit
     except Exception as e:
         return "Error adding the fruit: " + str(e)
@@ -76,8 +93,6 @@ add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 if streamlit.button('Add a fruit to the list'):
     back_from_function = insert_row_snowflake(add_my_fruit)
     streamlit.text(back_from_function)
-
-
 
 
 
