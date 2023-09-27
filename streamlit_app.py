@@ -36,8 +36,8 @@ def get_fruityvice_data(this_fruit_choice):
       # output it the screen as table
       streamlit.dataframe(back_from_function)
       
-  except URLError as e:
-    streamlit.error()
+  # except URLError as e:
+  #   streamlit.error()
 
 
 my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
