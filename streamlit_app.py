@@ -92,7 +92,7 @@ except requests.exceptions.RequestException as e:
     streamlit.error("An error occurred while fetching data from Fruityvice API")
 
 # Connect to Snowflake
-try:
+
     my_cnx = snowflake.connector.connect(**snowflake_secrets)
     my_cur = my_cnx.cursor()
 
@@ -124,7 +124,5 @@ try:
         back_from_function = insert_row_snowflake(add_my_fruit)
         streamlit.text(back_from_function)
 
-except snowflake.connector.errors.ProgrammingError as e:
-    streamlit.error("An error occurred while connecting to Snowflake: " + str(e))
 
 
