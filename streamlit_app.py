@@ -34,7 +34,7 @@ def get_fruityvice_data(this_fruit_choice):
     else:
       back_from_function=get_fruityvice_data(fruit_choice)
       # output it the screen as table
-      streamlit.dataframe(fruityvice_normalized)
+      streamlit.dataframe(back_from_function)
       
   except URLError as e:
     streamlit.error()
