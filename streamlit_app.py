@@ -124,4 +124,7 @@ try:
         back_from_function = insert_row_snowflake(add_my_fruit)
         streamlit.text(back_from_function)
 
+except snowflake.connector.errors.ProgrammingError as e:
+    streamlit.error("An error occurred while connecting to Snowflake: " + str(e))
+
 
