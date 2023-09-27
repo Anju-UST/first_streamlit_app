@@ -77,13 +77,14 @@ if streamlit.button('get fruit loads list'):
 #     back_from_function = insert_row_snowflake(add_my_fruit)
 #     streamlit.text(back_from_function)
 
+# Allow end-user to add a fruit to the list
 def insert_row_snowflake(new_fruit):
     try:
         # Create a new connection for adding a fruit to the list
         new_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
         with new_cnx.cursor() as my_cur:
-            query = "INSERT INTO fruit_load_list (fruit_name) VALUES (:1)"
-            my_cur.execute(query, (new_fruit,))
+            query = f"INSERT INTO fruit_load_list (fruit_name) VALUES ('{new_fruit}')"
+            my_cur.execute(query)
             new_cnx.commit()
         return "Thanks for adding " + new_fruit
     except Exception as e:
@@ -93,6 +94,7 @@ add_my_fruit = streamlit.text_input('What fruit would you like to add?')
 if streamlit.button('Add a fruit to the list'):
     back_from_function = insert_row_snowflake(add_my_fruit)
     streamlit.text(back_from_function)
+
 
 
 
